@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSave = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,7 +37,9 @@
             this.btnClose = new System.Windows.Forms.ToolStripMenuItem();
             this.действияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawPanel = new System.Windows.Forms.Panel();
+            this.отразитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnVert = new System.Windows.Forms.ToolStripMenuItem();
+            this.поГоризонталиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbtnSquare = new System.Windows.Forms.RadioButton();
             this.rbtnCirlcle = new System.Windows.Forms.RadioButton();
@@ -47,17 +49,19 @@
             this.cpnlBG = new System.Windows.Forms.Panel();
             this.lineColor = new System.Windows.Forms.ColorDialog();
             this.bgColor = new System.Windows.Forms.ColorDialog();
+            this.drawPanel = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.drawPanel)).BeginInit();
             this.SuspendLayout();
             // 
-            // progressBar1
+            // progress
             // 
-            this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(-5, 450);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(692, 23);
-            this.progressBar1.TabIndex = 0;
+            this.progress.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.progress.Location = new System.Drawing.Point(-5, 450);
+            this.progress.Name = "progress";
+            this.progress.Size = new System.Drawing.Size(692, 23);
+            this.progress.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -107,7 +111,8 @@
             // действияToolStripMenuItem
             // 
             this.действияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnClear});
+            this.btnClear,
+            this.отразитьToolStripMenuItem});
             this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
             this.действияToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.действияToolStripMenuItem.Text = "Действия";
@@ -115,16 +120,31 @@
             // btnClear
             // 
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(123, 22);
+            this.btnClear.Size = new System.Drawing.Size(152, 22);
             this.btnClear.Text = "Очистить";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // drawPanel
+            // отразитьToolStripMenuItem
             // 
-            this.drawPanel.Location = new System.Drawing.Point(0, 27);
-            this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(512, 423);
-            this.drawPanel.TabIndex = 2;
+            this.отразитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnVert,
+            this.поГоризонталиToolStripMenuItem});
+            this.отразитьToolStripMenuItem.Name = "отразитьToolStripMenuItem";
+            this.отразитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.отразитьToolStripMenuItem.Text = "Отразить";
+            // 
+            // btnVert
+            // 
+            this.btnVert.Name = "btnVert";
+            this.btnVert.Size = new System.Drawing.Size(154, 22);
+            this.btnVert.Text = "По вертикали";
+            this.btnVert.Click += new System.EventHandler(this.btnVert_Click);
+            // 
+            // поГоризонталиToolStripMenuItem
+            // 
+            this.поГоризонталиToolStripMenuItem.Name = "поГоризонталиToolStripMenuItem";
+            this.поГоризонталиToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.поГоризонталиToolStripMenuItem.Text = "По горизонтали";
             // 
             // groupBox1
             // 
@@ -209,24 +229,39 @@
             // 
             this.bgColor.Color = System.Drawing.Color.White;
             // 
+            // drawPanel
+            // 
+            this.drawPanel.BackColor = System.Drawing.Color.White;
+            this.drawPanel.Location = new System.Drawing.Point(0, 27);
+            this.drawPanel.Name = "drawPanel";
+            this.drawPanel.Size = new System.Drawing.Size(512, 417);
+            this.drawPanel.TabIndex = 6;
+            this.drawPanel.TabStop = false;
+            this.drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseMove);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 470);
+            this.Controls.Add(this.drawPanel);
             this.Controls.Add(this.cpnlBG);
             this.Controls.Add(this.cpnlLine);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.drawPanel);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progress);
             this.Controls.Add(this.menuStrip1);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "mainForm";
             this.Text = "Editor";
+            this.Load += new System.EventHandler(this.mainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.drawPanel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,7 +269,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progress;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnSave;
@@ -243,7 +278,6 @@
         private System.Windows.Forms.ToolStripMenuItem btnClose;
         private System.Windows.Forms.ToolStripMenuItem действияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnClear;
-        private System.Windows.Forms.Panel drawPanel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbtnSquare;
         private System.Windows.Forms.RadioButton rbtnCirlcle;
@@ -253,6 +287,10 @@
         private System.Windows.Forms.Panel cpnlBG;
         private System.Windows.Forms.ColorDialog lineColor;
         private System.Windows.Forms.ColorDialog bgColor;
+        private System.Windows.Forms.PictureBox drawPanel;
+        private System.Windows.Forms.ToolStripMenuItem отразитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnVert;
+        private System.Windows.Forms.ToolStripMenuItem поГоризонталиToolStripMenuItem;
     }
 }
 
