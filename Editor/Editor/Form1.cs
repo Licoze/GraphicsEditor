@@ -16,9 +16,14 @@ namespace Editor
         public mainForm()
         {
            
+
             InitializeComponent();
             _gwi = GraphicsWorker.Instance;
-
+            _gwi.InitializeGraphics(drawPanel.CreateGraphics(), cpnlLine.BackColor, cpnlBG.BackColor);
+            _gwi.ClearGraphics();
+            drawPanel.MouseDown += _gwi.MouseDown;
+            drawPanel.MouseMove += _gwi.MouseMove;
+            drawPanel.MouseUp += _gwi.MouseUp;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -62,34 +67,6 @@ namespace Editor
         private void rbtnSquare_CheckedChanged(object sender, EventArgs e)
         {
             _gwi.Mode = Modes.Square;
-        }
-
-        private void mainForm_Load(object sender, EventArgs e)
-        {
-            
-            drawPanel.Image = new Bitmap(drawPanel.Width, drawPanel.Height);
-            _gwi.InitializeGraphics((drawPanel.Image as Bitmap), cpnlLine.BackColor, cpnlBG.BackColor);
-            _gwi.ClearGraphics();
-            drawPanel.MouseDown += _gwi.MouseDown;
-            drawPanel.MouseMove += _gwi.MouseMove;
-            drawPanel.MouseUp += _gwi.MouseUp;
-            _gwi.progressChanged += ProgressChanged;
-        }
-
-
-        private void drawPanel_MouseMove(object sender, MouseEventArgs e)
-        {
-            drawPanel.Refresh();
-        }
-
-        private void btnVert_Click(object sender, EventArgs e)
-        {
-            _gwi.VerticalFlip().Start(TaskScheduler.FromCurrentSynchronizationContext());
-            
-        }
-        private void ProgressChanged(int x)
-        {
-            progress.Value = x;
         }
     }
 }
