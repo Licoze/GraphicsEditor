@@ -8,7 +8,7 @@ namespace Editor
 {
    public interface IClosed:IShape
     {
-         Color FillColor { get; }
+        void FillColorChanged(Color color);
 
     }
 }

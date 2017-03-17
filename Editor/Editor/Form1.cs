@@ -36,6 +36,7 @@ namespace Editor
             if (lineColor.ShowDialog() == DialogResult.OK)
             {
                 cpnlLine.BackColor = lineColor.Color;
+                _gwi.LineColor= lineColor.Color;
             }
         }
 
@@ -44,6 +45,7 @@ namespace Editor
             if (bgColor.ShowDialog() == DialogResult.OK)
             {
                 cpnlBG.BackColor = bgColor.Color;
+                _gwi.FillColor = bgColor.Color;
             }
         }
 

@@ -9,9 +9,9 @@ namespace Editor
 {
    public interface IShape
     {
-        Color LineColor { get; }
         void MouseMove(object sender, MouseEventArgs e);
         void MouseDown(object sender, MouseEventArgs e);
         void MouseUp(object sender, MouseEventArgs e);
+        void LineColorChanged(Color color);
     }
 }
