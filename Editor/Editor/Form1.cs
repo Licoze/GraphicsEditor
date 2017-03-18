@@ -69,7 +69,6 @@ namespace Editor
             
             drawPanel.Image = new Bitmap(drawPanel.Width, drawPanel.Height);
             _gwi.InitializeGraphics((drawPanel.Image as Bitmap), cpnlLine.BackColor, cpnlBG.BackColor);
-            _gwi.ClearGraphics();
             drawPanel.MouseDown += _gwi.MouseDown;
             drawPanel.MouseMove += _gwi.MouseMove;
             drawPanel.MouseUp += _gwi.MouseUp;
@@ -82,14 +81,45 @@ namespace Editor
             drawPanel.Refresh();
         }
 
-        private void btnVert_Click(object sender, EventArgs e)
+        private async void btnVert_Click(object sender, EventArgs e)
         {
-            _gwi.VerticalFlip().Start(TaskScheduler.FromCurrentSynchronizationContext());
-            
+           drawPanel.Image= await _gwi.VerticalFlipAsync();
+            _gwi.InitializeGraphics((drawPanel.Image as Bitmap), cpnlLine.BackColor, cpnlBG.BackColor);
+
+        }
+       
+
+        private async void btnHor_Click(object sender, EventArgs e)
+        {
+            drawPanel.Image = await _gwi.HorizontalFlipAsync();
+            _gwi.InitializeGraphics((drawPanel.Image as Bitmap), cpnlLine.BackColor, cpnlBG.BackColor);
         }
         private void ProgressChanged(int x)
         {
             progress.Value = x;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if(saveFile.ShowDialog()== DialogResult.OK)
+            {
+                drawPanel.Image.Save(saveFile.FileName);
+            }
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+
+                drawPanel.Image = Image.FromFile(openFile.FileName);
+                _gwi.InitializeGraphics((drawPanel.Image as Bitmap), cpnlLine.BackColor, cpnlBG.BackColor);
+            }
         }
     }
 }

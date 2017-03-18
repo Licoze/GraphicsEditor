@@ -12,22 +12,25 @@ namespace Editor
     enum Modes {Pencil,Line,Square,Circle}
     class GraphicsWorker
     {
+        #region Fields
         private delegate void ColorChanged(Color color);
         public delegate void ProgressChanged(int currProgress);
         private event ColorChanged lineChanged;
         private event ColorChanged fillChanged;
         public event ProgressChanged progressChanged;
         private static readonly GraphicsWorker _instance = new GraphicsWorker();
-        private readonly Dictionary<Modes, IShape> _modules = new Dictionary<Modes, IShape>();
+        private Dictionary<Modes, IShape> _modules;
         private Modes _mode;
         private Graphics _gi;
         private Color _line;
         private Color _fill;
         private Bitmap _image;
+        #endregion
         private GraphicsWorker()
         {
 
         }
+        #region Properties
         public Modes Mode
         {
             get
@@ -66,10 +69,12 @@ namespace Editor
             }
 
         }
+        #endregion
         public void ClearGraphics()
         {
             _gi.Clear(Color.White);
         }
+        #region Event methods
         private void OnFillChanged(Color color)
         {
             fillChanged?.Invoke(color);
@@ -82,8 +87,10 @@ namespace Editor
         {
             progressChanged?.Invoke(currProgress);
         }
+        #endregion
         public void InitializeGraphics(Bitmap img, Color line, Color fill)
         {
+            _modules = new Dictionary<Modes, IShape>();
             _gi = Graphics.FromImage(img);
             _image = img;
             _modules.Add(Modes.Pencil, new FreeFormLine(_gi, line));
@@ -96,7 +103,10 @@ namespace Editor
             lineChanged += _modules[Modes.Square].LineColorChanged;
             fillChanged += (_modules[Modes.Circle] as IClosed).FillColorChanged;
             fillChanged += (_modules[Modes.Square] as IClosed).FillColorChanged;
+            
         }
+       
+        #region Mouse events
         public void MouseMove(object sender, MouseEventArgs e)
         {
             _modules[_mode].MouseMove(sender, e);
@@ -109,31 +119,59 @@ namespace Editor
         {
             _modules[_mode].MouseUp(sender, e);
         }
-        public Task VerticalFlip()
+        #endregion
+        #region Transforms
+        public async Task<Bitmap> VerticalFlipAsync()
+        {
+        
+            IProgress< int> progress = new Progress<int>((i) =>{ OnProgressChanged(i); });
+            Bitmap changed = new Bitmap(_image);
+            return await Task.Run(() =>
+              {
+                  for (int x = 0; x <= changed.Width - 1; x++)
+                  {                    
+                      double prog = 100 * x / changed.Width;
+                      progress.Report((int)Math.Truncate(prog));
+                      for (int y = 0; y <= changed.Height / 2; y++)
+                      {
+                          Color p1 = changed.GetPixel(x, y);
+                          Color p2 = changed.GetPixel(x, changed.Height - y - 1);
+                          changed.SetPixel(x, y, p2);
+                          changed.SetPixel(x, changed.Height - y - 1, p1);
+                      }
+                  }
+                  progress.Report(0);
+                  _image = changed;                 
+                  return _image;
+              });
+            
+        }
+        
+        public async Task<Bitmap> HorizontalFlipAsync()
         {
 
-            
-            return new Task(() =>
+            IProgress<int> progress = new Progress<int>((i) => { OnProgressChanged(i); });
+            Bitmap changed = new Bitmap(_image);
+            return await Task.Run(() =>
             {
-                for (int x = 0; x <= _image.Width - 1; x++)
+                for (int y= 0; y <= changed.Height - 1; y++)
                 {
-                    Thread.Sleep(3);
-                    double prog = 100 * x / _image.Width;
-                    OnProgressChanged((int)Math.Truncate(prog));
-                    for (int y = 0; y <= _image.Height / 2; y++)
+                    double prog = 100 * y / changed.Width;
+                    progress.Report((int)Math.Truncate(prog));
+                    for (int x = 0; x<= changed.Width / 2; x++)
                     {
-                        
-                        Color p1 = _image.GetPixel(x, y);
-                        Color p2 = _image.GetPixel(x, _image.Height - y - 1);
-                        
-                        _image.SetPixel(x, y, p2);
-                        _image.SetPixel(x, _image.Height - y - 1, p1);
-
+                        Color p1 = changed.GetPixel(x, y);
+                        Color p2 = changed.GetPixel(changed.Width-x-1, y);
+                        changed.SetPixel(x, y, p2);
+                        changed.SetPixel(changed.Width - x - 1, y, p1);
                     }
                 }
-                OnProgressChanged(0);
-               
+                progress.Report(0);
+                _image = changed;
+                return _image;
             });
+
         }
+        #endregion
     }
 }

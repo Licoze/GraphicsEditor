@@ -25,7 +25,9 @@ namespace Editor
 
         public void LineColorChanged(Color color)
         {
+            
             _line = new Pen(color, 2);
         }
+     
     }
 }

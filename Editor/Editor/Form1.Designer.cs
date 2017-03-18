@@ -39,7 +39,7 @@
             this.btnClear = new System.Windows.Forms.ToolStripMenuItem();
             this.отразитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnVert = new System.Windows.Forms.ToolStripMenuItem();
-            this.поГоризонталиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnHor = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbtnSquare = new System.Windows.Forms.RadioButton();
             this.rbtnCirlcle = new System.Windows.Forms.RadioButton();
@@ -50,6 +50,8 @@
             this.lineColor = new System.Windows.Forms.ColorDialog();
             this.bgColor = new System.Windows.Forms.ColorDialog();
             this.drawPanel = new System.Windows.Forms.PictureBox();
+            this.openFile = new System.Windows.Forms.OpenFileDialog();
+            this.saveFile = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawPanel)).BeginInit();
@@ -88,25 +90,28 @@
             // btnSave
             // 
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(129, 22);
+            this.btnSave.Size = new System.Drawing.Size(152, 22);
             this.btnSave.Text = "Сохранить";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnOpen
             // 
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(129, 22);
+            this.btnOpen.Size = new System.Drawing.Size(152, 22);
             this.btnOpen.Text = "Открыть";
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // btnClose
             // 
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(129, 22);
+            this.btnClose.Size = new System.Drawing.Size(152, 22);
             this.btnClose.Text = "Выход";
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // действияToolStripMenuItem
             // 
@@ -128,7 +133,7 @@
             // 
             this.отразитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnVert,
-            this.поГоризонталиToolStripMenuItem});
+            this.btnHor});
             this.отразитьToolStripMenuItem.Name = "отразитьToolStripMenuItem";
             this.отразитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.отразитьToolStripMenuItem.Text = "Отразить";
@@ -140,11 +145,12 @@
             this.btnVert.Text = "По вертикали";
             this.btnVert.Click += new System.EventHandler(this.btnVert_Click);
             // 
-            // поГоризонталиToolStripMenuItem
+            // btnHor
             // 
-            this.поГоризонталиToolStripMenuItem.Name = "поГоризонталиToolStripMenuItem";
-            this.поГоризонталиToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.поГоризонталиToolStripMenuItem.Text = "По горизонтали";
+            this.btnHor.Name = "btnHor";
+            this.btnHor.Size = new System.Drawing.Size(154, 22);
+            this.btnHor.Text = "По горизонтали";
+            this.btnHor.Click += new System.EventHandler(this.btnHor_Click);
             // 
             // groupBox1
             // 
@@ -239,6 +245,14 @@
             this.drawPanel.TabStop = false;
             this.drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseMove);
             // 
+            // openFile
+            // 
+            this.openFile.Filter = "BMP files|*.bmp";
+            // 
+            // saveFile
+            // 
+            this.saveFile.Filter = "BMP files|*.bmp";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,7 +304,9 @@
         private System.Windows.Forms.PictureBox drawPanel;
         private System.Windows.Forms.ToolStripMenuItem отразитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnVert;
-        private System.Windows.Forms.ToolStripMenuItem поГоризонталиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnHor;
+        private System.Windows.Forms.OpenFileDialog openFile;
+        private System.Windows.Forms.SaveFileDialog saveFile;
     }
 }
 

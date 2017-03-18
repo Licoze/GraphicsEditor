@@ -19,6 +19,7 @@ namespace Editor
         {
             _fill = new SolidBrush(color);
         }
+   
 
     }
 }

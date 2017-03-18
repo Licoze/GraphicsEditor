@@ -31,7 +31,8 @@ namespace Editor.Figures
             {
                 _prev = _curr;
                 _curr = e.Location;
-                var rect = new System.Drawing.Rectangle(_prev, new Size(_curr.X-_prev.X,_curr.Y-_prev.Y));
+                var side = Math.Min(_curr.X - _prev.X, _curr.X - _prev.X);
+                var rect = new System.Drawing.Rectangle(_prev, new Size(side, side));
                 _gi.DrawEllipse(_line, rect);
                 _gi.FillEllipse(_fill, rect);
 
